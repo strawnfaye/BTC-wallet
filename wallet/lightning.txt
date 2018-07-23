@@ -1,0 +1,32 @@
+Two important models for routing
+1. Intermediate hubs at each point decide in which direction to transmit the packet that they've just recieved
+	-model used on internet
+	-"hot potato"
+	-on the internet: each intermediate node know source and destination, 	and find best way to get to destination at each point
+2. source routing: originator of a packet could define a PRI - the 	intermediary hubs - in advance. Originator decides the package route	
+-on lightning network: uses source routing
+-routing implementations completely independent from underlying network
+-currently using a form of source routing that uses encrypted layers - onion routing
+-so its a "source-based, onion-routed network"
+-the node that starts a payment receives information about all the available channels out there, the capacity the channel has, and the fee for that channel, and constructs an optimal path that results in the lowest fee
+-once its constructed a path, encrypts each hop in the path and embeds it such that it wraps the routing information in layers like an onion
+-takes final destination and final hop and encrypts it to the public key of the node before the final hops, then takes that information and encrypts it to the node before that, and continues working backwards until it has this onion of routing information- the path- until the outer layer is encrypted only to the first node it needs to reach, then transmits it to that first node
+-that first node can only read the outer layer-knows where to send it next. Unwraps and sends to next node
+-each node can only see previous node and knows next node
+-makes it difficult to reconstruct path
+-each node can only read one hop ahead- doesn't know where its going or where it came from
+-transmits that, which starts unwrapping it layer by layer until it reaches the destination
+-the destination is the only node that realizes its the destination, and the origin node is the only one that knows it didn't receive this from anyone else-every node in between doesn't know anything.
+
+if each lightning channel needs funding to stay up, won't that lock a lot of value?
+Yes, In order to use lightning network, you need to have enough value in the channel to transmit the payment you want. Need to have enough on your end of the channel as capacity to send
+-thats why you normally open 2-5 channels to other nodes to give paths to lightning network. Fund those with enough to do the types of payments you want to do
+-in order to use more funds than available in existing channel, either have to create new channel or fund one of your existing channels with more money
+
+How to fund existing channel:
+1. buy bitcoin, but instead of having them send it to your address, have them send it to your lightning network address
+
+Can't spend what you don't have, so yes will have to lock value into channels
+Ironically- this is what prevents centralization of hubs
+-if you try to create a lightning network node that has many channels to that single node, makes you a hot wallet, and susceptable to attack
+-this is a disincentive to centralizing- better to have many nodes and many channels, in a mesh network

@@ -1,0 +1,40 @@
+Bitcoin Wallet
+
+Wallet programs: 
+	1. Create public keys to receive satoshis
+	2. Use corresponding private keys to spend satoshis
+Wallet files:
+	1. Store private keys
+	2. (Optionally) store other info related to transactions for the 	wallet program
+
+Wallet Programs:
+- essential feature of Wallet software: permitting receiving and spending of satoshis
+- one wallet program doesn't have to do both things
+	- 2 can work together
+		-one distributes public keys in order to receive satoshis
+		-other to sign transactions spending those satoshis
+- need to interact with peer to peer network
+	- to get info from block chain
+	- to broadcast new transactions
+- can be a separate program from former two
+- So, 3 parts of wallet system:
+	1. public key distribution program
+	2. signing program
+	3. networked program
+*note: in many cases, p2pkh or p2sh hashes will be distributed instead of public keys
+	-public keys only distributed when outputs they control are spent
+Full-service wallets:
+-simplest wallet performs all 3 functions:
+1. -generates private keys
+   -derives corresponding public keys
+   -helps distribute public keys as necessary
+2. -monitors outputs spent to those public keys
+   -creates and signs transactions spending those outputs
+3. -broadcasts signed transactions
+
+-Advantage: easy to use
+-Disadvantage: store private keys on a device connected to the internet
+
+Signing-only wallets:
+-increase security by generating and storing private keys with a separate wallet program operating in a more secure environment
+- typically use deterministic key creation to create parent private and public keys which can create child private and public keys
